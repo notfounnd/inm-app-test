@@ -7,7 +7,7 @@ from requests.auth import HTTPBasicAuth
 
 def lista_empregados(request):
     if request.user.is_authenticated:
-        response = requests.get("https://in-api-tests.herokuapp.com/empregado/list_all", auth=HTTPBasicAuth('inmetrics', 'automacao'))
+        response = requests.get("https://inm-api-test.herokuapp.com/empregado/list_all", auth=HTTPBasicAuth('inmetrics', 'automacao'))
         empregados = response.json()
         return render(request, 'empregados/lista_empregados.html', {'empregados': empregados })
     else:
@@ -61,7 +61,7 @@ def new_empregado(request):
 def delete_empregado(request, emp_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            url = f"https://in-api-tests.herokuapp.com/empregado/deletar/{emp_id}"
+            url = f"https://inm-api-test.herokuapp.com/empregado/deletar/{emp_id}"
             headers = {'content-type': 'application/json'}
             auth = HTTPBasicAuth('inmetrics', 'automacao')
             response = requests.delete(url, headers=headers, auth = auth)
@@ -75,21 +75,21 @@ def delete_empregado(request, emp_id):
         return redirect('lista_empregados')
 
 def cadastra_empregado(nome, sexo, cpf, salario, cargo, admissao, tipo_contratacao):
-    url = "https://in-api-tests.herokuapp.com/empregado/cadastrar"
+    url = "https://inm-api-test.herokuapp.com/empregado/cadastrar"
     payload = gera_body(nome, sexo, cpf, salario, cargo, admissao, tipo_contratacao)
     headers = {'content-type': 'application/json'}
     auth = HTTPBasicAuth('inmetrics', 'automacao')
     return requests.post(url, data=payload, headers=headers, auth = auth)
 
 def edita_empregado(nome, sexo, cpf, salario, cargo, admissao, tipo_contratacao, emp_id):
-    url = f"https://in-api-tests.herokuapp.com/empregado/alterar/{emp_id}"
+    url = f"https://inm-api-test.herokuapp.com/empregado/alterar/{emp_id}"
     payload = gera_body(nome, sexo, cpf, salario, cargo, admissao, tipo_contratacao)
     headers = {'content-type': 'application/json'}
     auth = HTTPBasicAuth('inmetrics', 'automacao')
     return requests.put(url, data=payload, headers=headers, auth = auth)
 
 def busca_empregado(emp_id):
-    url = f"https://in-api-tests.herokuapp.com/empregado/list/{emp_id}"
+    url = f"https://inm-api-test.herokuapp.com/empregado/list/{emp_id}"
     response = requests.get(url, auth=HTTPBasicAuth('inmetrics', 'automacao'))
     return response.json()
 
