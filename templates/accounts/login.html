@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-message">
+    {% if messages %}
+        {% for message in messages %}
+              {% if message.tags == 'error' %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ERRO! </strong>
+              {% else %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong> SUCESSO! </strong>
+              {% endif %}
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="javascript:{$(this).parent().hide()}" >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-30 p-r-30 p-t-35 p-b-20">
+				<form class="login100-form validate-form flex-sb flex-w" method="POST" action="{% url 'login' %}" >
+				{% csrf_token %}
+					<span class="login100-form-title p-b-1">
+						Login
+					</span>
+					<div class="container-login100-form-btn m-t-17 text-center" style="color: red;">
+					</div>
+					<div class="p-t-20 p-b-9">
+						<span class="txt1">
+							Usuário
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Campo obrigatório">
+						<input class="input100" type="text" name="username" >
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Senha
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Campo obrigatório">
+						<input class="input100" type="password" name="pass" >
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="container-login100-form-btn m-t-17 p-t-13">
+						<button class="login100-form-btn">
+							Entre
+						</button>
+					</div>
+
+					<div class="w-full text-center p-t-30">
+						<a href="{% url 'signup' %}" class="txt2 bo1">
+							Cadastre-se
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+{% endblock %}
+
+ {% block script %}
+	<script type="text/javascript" src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/animsition/js/animsition.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/bootstrap/js/popper.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/select2/select2.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/daterangepicker/moment.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/daterangepicker/daterangepicker.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/countdowntime/countdowntime.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'js/main.js' %}" ></script>
+ {% endblock  %}

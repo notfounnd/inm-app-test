@@ -1,0 +1,156 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container-message">
+    {% if messages %}
+        {% for message in messages %}
+              {% if message.tags == 'error' %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ERRO! </strong>
+              {% else %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong> SUCESSO! </strong>
+              {% endif %}
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="javascript:{$(this).parent().hide()}" >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+		<div class="container-login100">
+      <div class="wrap-cadastro100 p-l-30 p-r-30 p-t-5 p-b-10">
+        <form class="login100-form validate-form flex-sb flex-w" method="POST" action="{% url 'new_empregado' %}" >
+          {% csrf_token %}
+          <div class="float-rigth div-float-rigth">
+            <div class="p-t-5 p-b-1">
+              <span class="txt1">
+                Nome
+              </span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate = "Campo obrigatório">
+              <input class="inputcadastro100" id="inputNome" type="text" name="nome" required>
+              <span class="focus-input100"></span>
+            </div>
+
+            <div class="p-t-5 p-b-1">
+              <span class="txt1">
+                CPF
+              </span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate = "Campo obrigatório">
+              <input class="inputcadastro100 form-control cpf-mask" id="cpf"
+                onchange="ValidarCPF(document.getElementById('cpf'))" type="text" name="cpf" required>
+              <span class="focus-input100"></span>
+            </div>
+
+            <div class="p-t-5 p-b-1">
+              <span class="txt1">
+                Sexo
+              </span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate = "Campo obrigatório">
+              <div>
+                <select class="form-control form-control100" id="slctSexo" name="sexo" required>
+                    <option selected></option>
+                    <option>Indiferente</option>
+                    <option>Feminino</option>
+                    <option>Masculino</option>
+                </select>
+              </div>
+              <span class="focus-input100"></span>
+            </div>
+
+            {% comment %} <div class="p-t-5 p-b-1">
+              <span class="txt1">
+                Departamento
+              </span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate = "Campo obrigatório">
+              <div>
+                <select class="form-control form-control100" id="slctDepto" name="departamento" required>
+                  <option>Indiferente</option>
+                  <option>Feminino</option>
+                  <option>Masculino</option>
+                </select>
+              </div>
+              <span class="focus-input100"></span>
+            </div> {% endcomment %}
+
+            <div class="p-t-5 p-b-1">
+              <span class="txt1">
+                Admissão
+              </span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate = "Campo obrigatório">
+              <input class="inputcadastro100 form-control date-mask" id="inputAdmissao" type="text" name="admissao"  required>
+              <span class="focus-input100"></span>
+            </div>
+          </div>
+
+          <div class="float-left div-float-rigth">
+
+
+            <div class="p-t-5 p-b-1">
+              <span class="txt1">
+                Cargo
+              </span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate = "Campo obrigatório">
+              <input class="inputcadastro100" id="inputCargo" type="text" name="cargo" required>
+              <span class="focus-input100"></span>
+            </div>
+
+            <div class="p-t-5 p-b-1">
+              <span class="txt1">
+                Salário
+              </span>
+            </div>
+            <div class="wrap-input100 validate-input money" data-validate = "Campo obrigatório">
+              <input class="inputcadastro100" id="dinheiro" type="text" name="salario" required>
+              <span class="focus-input100"></span>
+            </div>
+
+            <div class="p-t-5 p-b-1">
+              <span class="txt1">
+                Tipo de Contratação
+              </span>
+            </div>
+            <div class="radio-button" data-validate = "Campo obrigatório">
+              <input type="radio" id="clt" name="tipo-contratacao" value="clt" required><label class="label-radio" for="clt">CLT</label></br>
+              <input type="radio" id="pj" name="tipo-contratacao" value="pj"><label class="label-radio" for="pj">PJ</label>
+            </div>
+          </div>
+          <div class="container-editnew100-form-btn m-t-17" >
+            <input type="submit" class="cadastrar-form-btn">
+            </input>
+          </div>
+          <div class="container-editnew100-form-btn m-t-17" >
+            <input value="Cancelar" type="reset" class="cancelar-form-btn" onclick="javascript:{window.location.href='/empregados'}">
+            </input>
+          </div>
+        </form>
+      </div>
+  	</div>
+{% endblock %}
+{% block script %}
+  <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+  <script type="text/javascript" src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/animsition/js/animsition.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/bootstrap/js/popper.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/select2/select2.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/daterangepicker/moment.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/daterangepicker/daterangepicker.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'vendor/countdowntime/countdowntime.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'js/jquery.mask.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/masks.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'js/validaCpf.js' %}" ></script>
+  <script>
+
+  </script>
+{% endblock  %}

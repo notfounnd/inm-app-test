@@ -1,0 +1,80 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-message">
+    {% if messages %}
+        {% for message in messages %}
+              {% if message.tags == 'error' %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> ERRO! </strong>
+              {% else %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong> SUCESSO! </strong>
+              {% endif %}
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="javascript:{$(this).parent().hide()}" >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <div class="container-lista" >
+      <table id="tabela" class="table table-light table-hover rounded" style="width: 100%;" >
+        <thead class="text-center" >
+          <tr>
+            <th class="text-center" >Nome</th>
+            <th class="text-center" >CPF</th>
+            <th class="text-center" >Sexo</th>
+            <th class="text-center" >Cargo</th>
+            <th class="text-center" >Admissão</th>
+            <th class="text-center" >Salário</th>
+            <th class="text-center" >Manter</th>
+          </tr>
+
+        <tbody>
+        {% for empregado in empregados %}
+          <tr>
+            <td class="text-center" >{{ empregado.nome }}</td>
+            <td class="text-center" >{{ empregado.cpf }}</td>
+            <td class="text-center" >
+              {% if empregado.sexo == 'm' %}
+                Masculino
+              {% elif empregado.sexo == 'f' %}
+                Feminino
+              {% else %}
+                Indefinido
+              {% endif %}
+            </td>
+            <td class="text-center" >{{ empregado.cargo }}</td>
+            <td class="text-center" >{{ empregado.admissao }}</td>
+            <td class="text-center" id='dinheiro'>{{ empregado.salario }}</td>
+            {% with emp_id=empregado.empregadoId %}
+              <td class="text-center" >
+                <a href="javascript:{document.getElementById('delete').submit()}">
+                  <button type="button" id="delete-btn" class="btn btn-danger" aria-label="Left Align" >
+                    <span class="fa fa-trash" aria-hidden="true" style="color: White;"></span>
+                    <form id="delete" method="POST" action="{% url 'delete' emp_id %}">
+                    {% csrf_token %}
+                    <input type="hidden" />
+                  </form>
+                  </button>
+                </a>
+                <a href="{% url 'edit' emp_id %}">
+                  <button type="button" class="btn btn-warning" style="color: White;">
+                    <span class="fa fa-pencil" aria-hidden="true"></span>
+                  </button>
+                </a>
+              </td>
+            {% endwith %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  {% endblock %}
+  {% block script %}
+    <script type="text/javascript" src="{% static 'js/onload.js' %}" ></script>
+  {% endblock  %}
+
