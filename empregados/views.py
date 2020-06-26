@@ -106,7 +106,7 @@ def gera_body(nome, sexo, cpf, salario, cargo, admissao, tipo_contratacao):
             "cargo": cargo,
             "comissao": "0,00",
             "cpf": cpf,
-            "departamentoId": 5,
+            "departamentoId": 1,
             "nome": nome,
             "salario": salario,
             "sexo": sexo,
