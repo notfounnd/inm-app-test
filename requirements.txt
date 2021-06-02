@@ -34,7 +34,7 @@ six==1.14.0
 sqlparse==0.3.1
 toml==0.10.0
 tqdm==4.46.0
-urllib3==1.25.9
+urllib3==1.26.5
 wcwidth==0.1.9
 whitenoise==5.1.0
 winacl==0.0.3
